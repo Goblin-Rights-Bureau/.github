@@ -1,0 +1,53 @@
+// MushroomMapper: Mapping the Best Foraging Spots for Mushrooms
+
+// Define the MushroomSpot class
+class MushroomSpot {
+    constructor(location, mushroomType, abundance) {
+        this.location = location;
+        this.mushroomType = mushroomType;
+        this.abundance = abundance; // 'scarce', 'moderate', or 'plentiful'
+    }
+}
+
+// Define the MushroomMapper class
+class MushroomMapper {
+    constructor() {
+        this.foragingMap = [];
+    }
+
+    // Add a new mushroom spot to the map
+    addSpot(spot) {
+        this.foragingMap.push(spot);
+        this.announce(`New mushroom spot added at ${spot.location} with ${spot.abundance} ${spot.mushroomType} mushrooms.`);
+    }
+
+    // List all spots with a specific mushroom type
+    listSpotsByType(mushroomType) {
+        let spots = this.foragingMap.filter(spot => spot.mushroomType === mushroomType);
+        this.announce(`Listing all spots for ${mushroomType}:`);
+        spots.forEach(spot => {
+            this.announce(`Location: ${spot.location}, Abundance: ${spot.abundance}`);
+        });
+    }
+
+    // Find the best spot for a mushroom foraging adventure
+    findBestSpot() {
+        let bestSpot = this.foragingMap.sort((a, b) => {
+            let abundanceLevels = { 'scarce': 1, 'moderate': 2, 'plentiful': 3 };
+            return abundanceLevels[b.abundance] - abundanceLevels[a.abundance];
+        })[0];
+        this.announce(`The best spot for mushroom foraging is at ${bestSpot.location} with ${bestSpot.abundance} ${bestSpot.mushroomType} mushrooms.`);
+    }
+
+    // Announce messages to the goblins
+    announce(message) {
+        console.log(`MushroomMapper Announcement: ${message}`);
+    }
+}
+
+// Usage
+let mushroomMapper = new MushroomMapper();
+mushroomMapper.addSpot(new MushroomSpot('Goblin Valley', 'Bluecap', 'plentiful'));
+mushroomMapper.addSpot(new MushroomSpot('Witchwood Forest', 'Nightshade', 'scarce'));
+mushroomMapper.findBestSpot();
+mushroomMapper.listSpotsByType('Bluecap');
