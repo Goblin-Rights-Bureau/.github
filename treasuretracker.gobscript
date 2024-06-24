@@ -1,0 +1,60 @@
+// TreasureTracker: Inventory Management for Goblins
+
+// Define the TreasureItem class
+class TreasureItem {
+    constructor(name, quantity, isShiny) {
+        this.name = name;
+        this.quantity = quantity;
+        this.isShiny = isShiny;
+    }
+}
+
+// Define the TreasureTracker class
+class TreasureTracker {
+    constructor() {
+        this.treasureChest = [];
+    }
+
+    // Add a new item to the treasure chest
+    addItem(item) {
+        let existingItem = this.treasureChest.find(treasure => treasure.name === item.name);
+        if (existingItem) {
+            existingItem.quantity += item.quantity;
+        } else {
+            this.treasureChest.push(item);
+        }
+        this.announce(`${item.quantity} ${item.name}(s) added to the treasure chest!`);
+    }
+
+    // Remove an item from the treasure chest
+    removeItem(itemName, quantity) {
+        let existingItem = this.treasureChest.find(treasure => treasure.name === itemName);
+        if (existingItem && existingItem.quantity >= quantity) {
+            existingItem.quantity -= quantity;
+            this.announce(`${quantity} ${itemName}(s) removed from the treasure chest!`);
+        } else {
+            this.announce(`Error: Not enough ${itemName}(s) in the treasure chest or item does not exist.`);
+        }
+    }
+
+    // Display all shiny items
+    listShinyItems() {
+        let shinyItems = this.treasureChest.filter(item => item.isShiny);
+        this.announce('Listing all shiny items:');
+        shinyItems.forEach(item => {
+            this.announce(`${item.quantity} ${item.name}(s)`);
+        });
+    }
+
+    // Announce messages to the goblins
+    announce(message) {
+        console.log(`TreasureTracker Announcement: ${message}`);
+    }
+}
+
+// Usage
+let treasureTracker = new TreasureTracker();
+treasureTracker.addItem(new TreasureItem('Gold Coin', 100, true));
+treasureTracker.addItem(new TreasureItem('Silver Ring', 50, true));
+treasureTracker.removeItem('Gold Coin', 30);
+treasureTracker.listShinyItems();
