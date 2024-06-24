@@ -1,0 +1,38 @@
+// SpellChecker: Ensuring Error-Free Spells for Goblins
+
+// Define the SpellChecker class
+class SpellChecker {
+    constructor() {
+        this.spellDictionary = ['glimmora', 'fizzlebang', 'sparkletooth', 'shadowmend'];
+    }
+
+    // Check if the spell is in the dictionary
+    checkSpell(spell) {
+        if (this.spellDictionary.includes(spell.toLowerCase())) {
+            this.announce(`The spell "${spell}" is correct and ready to cast!`);
+        } else {
+            this.announce(`Error: The spell "${spell}" is not recognized. Please consult the Big Book of Goblin Spells.`);
+        }
+    }
+
+    // Add a new spell to the dictionary
+    addSpell(spell) {
+        if (!this.spellDictionary.includes(spell.toLowerCase())) {
+            this.spellDictionary.push(spell.toLowerCase());
+            this.announce(`The spell "${spell}" has been added to the dictionary.`);
+        } else {
+            this.announce(`The spell "${spell}" is already in the dictionary.`);
+        }
+    }
+
+    // Announce messages to the goblins
+    announce(message) {
+        console.log(`SpellChecker Announcement: ${message}`);
+    }
+}
+
+// Usage
+let spellChecker = new SpellChecker();
+spellChecker.checkSpell('Glimmora');
+spellChecker.addSpell('Blinkenlights');
+spellChecker.checkSpell('Blinkenlights');
