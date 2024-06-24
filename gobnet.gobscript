@@ -1,0 +1,55 @@
+// GobNet: Secret Communication Network for Goblins
+
+// Define the GobNet class
+class GobNet {
+    constructor() {
+        this.connectedGoblins = [];
+        this.secretMessages = [];
+    }
+
+    // Connect a new goblin to the network
+    connectGoblin(goblinName) {
+        this.connectedGoblins.push(goblinName);
+        this.announce(`${goblinName} has joined GobNet!`);
+    }
+
+    // Send a secret message
+    sendSecretMessage(fromGoblin, toGoblin, message) {
+        if (this.connectedGoblins.includes(toGoblin)) {
+            let encryptedMessage = this.encryptMessage(message);
+            this.secretMessages.push({ from: fromGoblin, to: toGoblin, message: encryptedMessage });
+            this.announce(`${fromGoblin} has sent a secret message to ${toGoblin}!`);
+        } else {
+            this.announce(`Error: ${toGoblin} is not connected to GobNet.`);
+        }
+    }
+
+    // Encrypt the message
+    encryptMessage(message) {
+        // Simple encryption algorithm (for illustration purposes)
+        return message.split('').reverse().join('');
+    }
+
+    // Announce messages to the network
+    announce(message) {
+        console.log(`GobNet Announcement: ${message}`);
+    }
+
+    // Retrieve secret messages for a goblin
+    getSecretMessages(forGoblin) {
+        return this.secretMessages.filter(msg => msg.to === forGoblin)
+                                  .map(msg => this.decryptMessage(msg.message));
+    }
+
+    // Decrypt the message
+    decryptMessage(encryptedMessage) {
+        // Reverse the encryption process
+        return encryptedMessage.split('').reverse().join('');
+    }
+}
+
+// Usage
+let gobNet = new GobNet();
+gobNet.connectGoblin('Grunk');
+gobNet.connectGoblin('Glim');
+gobNet.sendSecretMessage('Grunk', 'Glim', 'Meet me by the old oak tree!');
